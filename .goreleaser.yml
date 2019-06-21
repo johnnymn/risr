@@ -1,0 +1,35 @@
+before:
+  hooks:
+    - go mod download
+builds:
+- env:
+  - CGO_ENABLED=0
+  goos:
+    - linux
+    - darwin
+
+  goarch:
+    - 386
+    - amd64
+    - arm64
+
+  goarm:
+    - 7
+
+  ignore:
+    - goos: darwin
+      goarch: 386
+
+archive:
+  replacements:
+    386: i386
+  format: binary
+
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+
+snapshot:
+  name_template: SNAPSHOT-{{.Commit}}
+
+changelog:
+  sort: asc
